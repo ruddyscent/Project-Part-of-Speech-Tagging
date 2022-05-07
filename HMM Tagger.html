@@ -15131,7 +15131,7 @@ Stream (word, tag) pairs:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pair_counts</span><span class="p">(</span><span class="n">sequences_A</span><span class="p">,</span> <span class="n">sequences_B</span><span class="p">):</span>
@@ -15143,11 +15143,9 @@ Stream (word, tag) pairs:
 <span class="sd">    words, then if 1244 sequences contain the word &quot;time&quot; tagged as a NOUN, then</span>
 <span class="sd">    you should return a dictionary such that pair_counts[NOUN][time] == 1244</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">emission_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">emission_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">tag_seq</span><span class="p">,</span> <span class="n">word_seq</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sequences_A</span><span class="p">,</span> <span class="n">sequences_B</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tag_seq</span><span class="p">,</span> <span class="n">word_seq</span><span class="p">):</span>
-            <span class="n">emission_counts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="p">{})</span>
-            <span class="n">emission_counts</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="n">emission_counts</span><span class="p">[</span><span class="n">tag</span><span class="p">][</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">emission_counts</span>
 
@@ -15176,7 +15174,7 @@ Stream (word, tag) pairs:
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[30]:</div>
 
 
 
@@ -15208,7 +15206,7 @@ Stream (word, tag) pairs:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a lookup table mfc_table where mfc_table[word] contains the tag label most frequently assigned to that word</span>
@@ -15239,7 +15237,7 @@ Stream (word, tag) pairs:
         <span class="n">mfc_table</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">mfc_table</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">mfc_table</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
-<span class="c1"># mfc_table = {k: max(v, key=v.get) for k, v in mfc_table.items()}</span>
+<span class="n">mfc_table</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">get</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mfc_table</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
 <span class="c1"># DO NOT MODIFY BELOW THIS LINE</span>
 <span class="n">mfc_model</span> <span class="o">=</span> <span class="n">MFCTagger</span><span class="p">(</span><span class="n">mfc_table</span><span class="p">)</span> <span class="c1"># Create a Most Frequent Class tagger instance</span>
@@ -15265,7 +15263,7 @@ Stream (word, tag) pairs:
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
 
 
 
@@ -15296,7 +15294,7 @@ Stream (word, tag) pairs:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">replace_unknown</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
@@ -15333,7 +15331,7 @@ Stream (word, tag) pairs:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">testing_set</span><span class="o">.</span><span class="n">keys</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
@@ -15369,7 +15367,7 @@ Stream (word, tag) pairs:
 
 Predicted labels:
 -----------------
-[{&#39;CONJ&#39;: 22369, &#39;X&#39;: 2}, {&#39;NOUN&#39;: 42}, {&#39;NUM&#39;: 82}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;NOUN&#39;: 61}, {&#39;NUM&#39;: 82}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;NOUN&#39;: 34}, {&#39;NUM&#39;: 32}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;CONJ&#39;: 22369, &#39;X&#39;: 2}, {&#39;NOUN&#39;: 70, &#39;VERB&#39;: 7}, {&#39;NUM&#39;: 82}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;.&#39;: 1923, &#39;X&#39;: 9}, {&#39;NOUN&#39;: 12}, {&#39;.&#39;: 1949, &#39;X&#39;: 9}, {&#39;.&#39;: 39500}]
+[&#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;.&#39;]
 
 Actual labels:
 --------------
@@ -15380,7 +15378,7 @@ Sentence Key: b100-23146
 
 Predicted labels:
 -----------------
-[{&#39;PRON&#39;: 732}, {&#39;VERB&#39;: 4106}, {&#39;DET&#39;: 50287, &#39;X&#39;: 3}, {&#39;NOUN&#39;: 89}, {&#39;ADV&#39;: 43, &#39;ADP&#39;: 5194, &#39;DET&#39;: 1607, &#39;PRON&#39;: 1431, &#39;X&#39;: 1}, {&#39;ADJ&#39;: 472}, {&#39;ADJ&#39;: 12}, {&#39;NOUN&#39;: 147}, {&#39;NOUN&#39;: 7, &#39;VERB&#39;: 1389, &#39;X&#39;: 1}, {&#39;VERB&#39;: 19}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;ADP&#39;: 28772, &#39;X&#39;: 2}, {&#39;NOUN&#39;: 4, &#39;VERB&#39;: 48}, {&#39;DET&#39;: 1459, &#39;PRON&#39;: 879}, {&#39;NOUN&#39;: 10}, {&#39;ADP&#39;: 15278, &#39;PRT&#39;: 362, &#39;X&#39;: 3}, {&#39;NOUN&#39;: 49}, {&#39;ADP&#39;: 676, &#39;ADJ&#39;: 2, &#39;PRT&#39;: 309}, {&#39;NOUN&#39;: 1, &#39;DET&#39;: 17377, &#39;X&#39;: 5}, {&#39;NOUN&#39;: 902, &#39;VERB&#39;: 1}, {&#39;.&#39;: 39500}]
+[&#39;PRON&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;.&#39;]
 
 Actual labels:
 --------------
@@ -15391,7 +15389,7 @@ Sentence Key: b100-35462
 
 Predicted labels:
 -----------------
-[{&#39;DET&#39;: 5807}, {&#39;ADJ&#39;: 542}, {&#39;NOUN&#39;: 22}, {&#39;NOUN&#39;: 7, &#39;VERB&#39;: 1389, &#39;X&#39;: 1}, {&#39;VERB&#39;: 5081, &#39;X&#39;: 2}, {&#39;VERB&#39;: 54}, {&#39;ADP&#39;: 3393}, {&#39;DET&#39;: 50287, &#39;X&#39;: 3}, {&#39;ADJ&#39;: 1272}, {&#39;ADJ&#39;: 100}, {&#39;NOUN&#39;: 164, &#39;VERB&#39;: 1}, {&#39;ADP&#39;: 28772, &#39;X&#39;: 2}, {&#39;DET&#39;: 50287, &#39;X&#39;: 3}, {&#39;NOUN&#39;: 2, &#39;ADJ&#39;: 9}, {&#39;NOUN&#39;: 26}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;ADP&#39;: 3393}, {&#39;ADJ&#39;: 7}, {&#39;NOUN&#39;: 68}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;CONJ&#39;: 22369, &#39;X&#39;: 2}, {&#39;ADP&#39;: 3393}, {&#39;DET&#39;: 50287, &#39;X&#39;: 3}, &#39;&lt;MISSING&gt;&#39;, {&#39;ADP&#39;: 28772, &#39;X&#39;: 2}, {&#39;ADV&#39;: 79, &#39;ADJ&#39;: 190}, {&#39;NOUN&#39;: 1, &#39;ADJ&#39;: 276}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;ADJ&#39;: 199}, {&#39;.&#39;: 46499, &#39;X&#39;: 1}, {&#39;CONJ&#39;: 22369, &#39;X&#39;: 2}, {&#39;ADJ&#39;: 134}, {&#39;NOUN&#39;: 35}, {&#39;ADP&#39;: 1420, &#39;X&#39;: 2}, {&#39;ADV&#39;: 248, &#39;ADJ&#39;: 46}, {&#39;NOUN&#39;: 26}, {&#39;.&#39;: 39500}]
+[&#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;&lt;MISSING&gt;&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADV&#39;, &#39;NOUN&#39;, &#39;.&#39;]
 
 Actual labels:
 --------------
@@ -15423,7 +15421,7 @@ Actual labels:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
@@ -15475,7 +15473,7 @@ Actual labels:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mfc_training_acc</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">mfc_model</span><span class="p">)</span>
@@ -15508,8 +15506,8 @@ Actual labels:
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>training accuracy mfc_model: 0.00%
-testing accuracy mfc_model: 0.00%
+<pre>training accuracy mfc_model: 95.72%
+testing accuracy mfc_model: 93.02%
 </pre>
 </div>
 </div>
@@ -15517,22 +15515,14 @@ testing accuracy mfc_model: 0.00%
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[20]:</div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [15]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 7&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> mfc_testing_acc <span style="color: rgb(98,98,98)">=</span> accuracy(data<span style="color: rgb(98,98,98)">.</span>testing_set<span style="color: rgb(98,98,98)">.</span>X, data<span style="color: rgb(98,98,98)">.</span>testing_set<span style="color: rgb(98,98,98)">.</span>Y, mfc_model)
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">testing accuracy mfc_model: </span><span class="ansi-bold" style="color: rgb(175,95,135)">{:.2f}</span><span style="color: rgb(175,0,0)">%</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>format(<span style="color: rgb(98,98,98)">100</span> <span style="color: rgb(98,98,98)">*</span> mfc_testing_acc))
-<span class="ansi-green-fg">----&gt; 7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">assert</span> mfc_training_acc <span style="color: rgb(98,98,98)">&gt;</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.955</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Uh oh. Your MFC accuracy on the training set doesn</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">t look right.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">assert</span> mfc_testing_acc <span style="color: rgb(98,98,98)">&gt;</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.925</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Uh oh. Your MFC accuracy on the testing set doesn</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">t look right.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> HTML(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">&lt;div class=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">alert alert-block alert-success</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">&gt;Your MFC tagger accuracy looks correct!&lt;/div&gt;</span><span style="color: rgb(175,0,0)">&#39;</span>)
 
-<span class="ansi-red-fg">AssertionError</span>: Uh oh. Your MFC accuracy on the training set doesn&#39;t look right.</pre>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your MFC tagger accuracy looks correct!</div>
 </div>
+
 </div>
 
 </div>
@@ -15567,12 +15557,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">unigram_counts</span><span class="p">(</span><span class="n">sequences</span><span class="p">):</span>
@@ -15583,12 +15573,7 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 <span class="sd">    For example, if the tag NOUN appears 275558 times over all the input sequences,</span>
 <span class="sd">    then you should return a dictionary such that your_unigram_counts[NOUN] == 275558.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">unigram_counts</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
-            <span class="n">unigram_counts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">unigram_counts</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">unigram_counts</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">sequences</span><span class="p">))</span>
 
 <span class="c1"># TODO: call unigram_counts with a list of tag sequences from the training set</span>
 <span class="n">tag_unigrams</span> <span class="o">=</span> <span class="n">unigram_counts</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">)</span>
@@ -15607,6 +15592,30 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your tag unigrams look good!</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15619,12 +15628,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">bigram_counts</span><span class="p">(</span><span class="n">sequences</span><span class="p">):</span>
@@ -15635,15 +15644,7 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 <span class="sd">    For example, if the pair of tags (NOUN, VERB) appear 61582 times, then you should</span>
 <span class="sd">    return a dictionary such that your_bigram_counts[(NOUN, VERB)] == 61582</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">bigram_counts</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">bigram</span> <span class="o">=</span> <span class="p">(</span><span class="n">sentence</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sentence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">bigram_counts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">bigram</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">bigram_counts</span><span class="p">[</span><span class="n">bigram</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">bigram_counts</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">zip</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">]))</span>
 
 <span class="c1"># TODO: call bigram_counts with a list of tag sequences from the training set</span>
 <span class="n">tag_bigrams</span> <span class="o">=</span> <span class="n">bigram_counts</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">)</span>
@@ -15662,6 +15663,30 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your tag bigrams look good!</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15674,12 +15699,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">starting_counts</span><span class="p">(</span><span class="n">sequences</span><span class="p">):</span>
@@ -15690,13 +15715,9 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 <span class="sd">    For example, if 8093 sequences start with NOUN, then you should return a</span>
 <span class="sd">    dictionary such that your_starting_counts[NOUN] == 8093</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">starting_counts</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">sentence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">starting_counts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">starting_counts</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">starting_counts</span>
-
+    <span class="n">starts_tag</span> <span class="o">=</span> <span class="p">[</span><span class="n">tags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">starts_tag</span><span class="p">)</span>
+    
 <span class="c1"># TODO: Calculate the count of each tag starting a sequence</span>
 <span class="n">tag_starts</span> <span class="o">=</span> <span class="n">starting_counts</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">)</span>
 
@@ -15711,6 +15732,30 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[37]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your starting tag counts look good!</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15723,12 +15768,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">ending_counts</span><span class="p">(</span><span class="n">sequences</span><span class="p">):</span>
@@ -15739,12 +15784,8 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 <span class="sd">    For example, if 18 sequences end with DET, then you should return a</span>
 <span class="sd">    dictionary such that your_ending_counts[DET] == 18</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ending_counts</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="n">sentence</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">ending_counts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">ending_counts</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">ending_counts</span>
+    <span class="n">ends_tag</span> <span class="o">=</span> <span class="p">[</span><span class="n">tags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">ends_tag</span><span class="p">)</span>
 
 <span class="c1"># TODO: Calculate the count of each tag ending a sequence</span>
 <span class="n">tag_ends</span> <span class="o">=</span> <span class="n">ending_counts</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">)</span>
@@ -15758,6 +15799,30 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your ending tag counts look good!</div>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -15790,12 +15855,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">basic_model</span> <span class="o">=</span> <span class="n">HiddenMarkovModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;base-hmm-tagger&quot;</span><span class="p">)</span>
@@ -15837,12 +15902,60 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>base-hmm-tagger : base-hmm-tagger-start summed to 45872.0, normalized to 1.0
+base-hmm-tagger : NOUN summed to 220632.0, normalized to 1.0
+base-hmm-tagger : VERB summed to 146161.0, normalized to 1.0
+base-hmm-tagger : PRON summed to 39383.0, normalized to 1.0
+base-hmm-tagger : ADV summed to 44877.0, normalized to 1.0
+base-hmm-tagger : . summed to 117757.0, normalized to 1.0
+base-hmm-tagger : CONJ summed to 30537.0, normalized to 1.0
+base-hmm-tagger : ADP summed to 115808.0, normalized to 1.0
+base-hmm-tagger : DET summed to 109671.0, normalized to 1.0
+base-hmm-tagger : PRT summed to 23906.0, normalized to 1.0
+base-hmm-tagger : ADJ summed to 66754.0, normalized to 1.0
+base-hmm-tagger : X summed to 1094.0, normalized to 1.0
+base-hmm-tagger : NUM summed to 11878.0, normalized to 1.0
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your HMM network topology looks good!</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hmm_training_acc</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">training_set</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">basic_model</span><span class="p">)</span>
@@ -15861,6 +15974,43 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>training accuracy basic hmm model: 97.54%
+testing accuracy basic hmm model: 96.16%
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="alert alert-block alert-success">Your HMM tagger accuracy looks correct! Congratulations, you've finished the project.</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15872,12 +16022,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">testing_set</span><span class="o">.</span><span class="n">keys</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
@@ -15895,6 +16045,61 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Sentence Key: b100-28144
+
+Predicted labels:
+-----------------
+[&#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;.&#39;]
+
+Actual labels:
+--------------
+(&#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;NOUN&#39;, &#39;NUM&#39;, &#39;.&#39;, &#39;.&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;.&#39;)
+
+
+Sentence Key: b100-23146
+
+Predicted labels:
+-----------------
+[&#39;PRON&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;.&#39;]
+
+Actual labels:
+--------------
+(&#39;PRON&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;VERB&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;.&#39;)
+
+
+Sentence Key: b100-35462
+
+Predicted labels:
+-----------------
+[&#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;]
+
+Actual labels:
+--------------
+(&#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;VERB&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADP&#39;, &#39;DET&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;ADJ&#39;, &#39;.&#39;, &#39;CONJ&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;ADP&#39;, &#39;ADJ&#39;, &#39;NOUN&#39;, &#39;.&#39;)
+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15909,12 +16114,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!!</span>jupyter nbconvert *.ipynb --to <span class="s1">&#39;html&#39;</span>
@@ -15923,6 +16128,34 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>[&#39;[NbConvertApp] Converting notebook HMM Tagger.ipynb to html&#39;,
+ &#39;[NbConvertApp] Writing 689225 bytes to HMM Tagger.html&#39;,
+ &#39;[NbConvertApp] Converting notebook HMM warmup (optional).ipynb to html&#39;,
+ &#39;[NbConvertApp] Writing 645633 bytes to HMM warmup (optional).html&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -15951,12 +16184,12 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
@@ -15971,6 +16204,68 @@ $$P(tag_1) = \frac{C(tag_1)}{N}$$
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>[nltk_data] Downloading package brown to /root/nltk_data...
+[nltk_data]   Unzipping corpora/brown.zip.
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>[(&#39;The&#39;, &#39;AT&#39;),
+ (&#39;Fulton&#39;, &#39;NP-TL&#39;),
+ (&#39;County&#39;, &#39;NN-TL&#39;),
+ (&#39;Grand&#39;, &#39;JJ-TL&#39;),
+ (&#39;Jury&#39;, &#39;NN-TL&#39;),
+ (&#39;said&#39;, &#39;VBD&#39;),
+ (&#39;Friday&#39;, &#39;NR&#39;),
+ (&#39;an&#39;, &#39;AT&#39;),
+ (&#39;investigation&#39;, &#39;NN&#39;),
+ (&#39;of&#39;, &#39;IN&#39;),
+ (&#34;Atlanta&#39;s&#34;, &#39;NP$&#39;),
+ (&#39;recent&#39;, &#39;JJ&#39;),
+ (&#39;primary&#39;, &#39;NN&#39;),
+ (&#39;election&#39;, &#39;NN&#39;),
+ (&#39;produced&#39;, &#39;VBD&#39;),
+ (&#39;``&#39;, &#39;``&#39;),
+ (&#39;no&#39;, &#39;AT&#39;),
+ (&#39;evidence&#39;, &#39;NN&#39;),
+ (&#34;&#39;&#39;&#34;, &#34;&#39;&#39;&#34;),
+ (&#39;that&#39;, &#39;CS&#39;),
+ (&#39;any&#39;, &#39;DTI&#39;),
+ (&#39;irregularities&#39;, &#39;NNS&#39;),
+ (&#39;took&#39;, &#39;VBD&#39;),
+ (&#39;place&#39;, &#39;NN&#39;),
+ (&#39;.&#39;, &#39;.&#39;)]</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
